@@ -1,4 +1,9 @@
-import { SteamAccountType, SteamUniverse, SteamInstance, SteamIdResolvedFrom } from './EnumTypes'
+import {
+  SteamAccountType,
+  SteamUniverse,
+  SteamInstance,
+  SteamIdResolvedFrom
+} from '../Utilities/EnumTypes'
 
 export class SteamId {
   accountType: SteamAccountType
