@@ -14,10 +14,20 @@ import {
  */
 abstract class CoreSteamAPIModule {
   // TODO array of SteamAPIEndpoint
-  constructor(protected readonly steamAPIKey: string, readonly baseURL: string, name: string) {}
+  readonly name: string = ''
+  readonly baseURL: string = ''
+
+  constructor(protected readonly steamAPIKey: string, baseURL?: string, name?: string) {
+    if (baseURL !== undefined) {
+      this.baseURL = baseURL
+    }
+    if (name !== undefined) {
+      this.name = name
+    }
+  }
 
   getAPIKeyParam(): SteamParameter {
-    let keyParam: SteamParameter = { name: 'apiKey', type: this.steamAPIKey }
+    let keyParam: SteamParameter = { name: 'apiKey', value: this.steamAPIKey }
     return keyParam // TODO: nicer solution for this?
   }
 }
@@ -28,14 +38,15 @@ abstract class CoreSteamAPIModule {
  *  let steamUserModule = new SteamUserAPIModule ();
  *  let response = steamUserModule.GetPlayerSummaries(userId);
  */
-export class SteamUserAPIModule extends CoreSteamAPIModule {
+export default class SteamUserAPIModule extends CoreSteamAPIModule {
+  name = 'ISteamUser'
+  baseURL = '//api.steampowered.com/'
+
   GetPlayerSummaries(steamId: number): SteamResponse {
-    let endpoint = new SteamAPIEndpoint(
-      this.baseURL,
-      'GetPlayerSummaries',
-      'v2',
-      this.getAPIKeyParam()
-    )
+    let endpoint = new SteamAPIEndpoint(this.baseURL, 'GetPlayerSummaries', 'v2', [
+      this.getAPIKeyParam(),
+      { name: 'steamId', value: steamId }
+    ])
     let result = SteamCommunicator.GetAsync(endpoint)
     return result
   }

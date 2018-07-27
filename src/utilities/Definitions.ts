@@ -19,7 +19,7 @@ export class SteamAPIEndpoint {
  */
 export interface SteamParameter {
   name: string
-  type: any
+  value: any
   description?: string
   isOptional?: boolean
 }
