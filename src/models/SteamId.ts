@@ -3,7 +3,7 @@ import {
   SteamUniverse,
   SteamInstance,
   SteamIdResolvedFrom
-} from '../Utilities/EnumTypes'
+} from '../utilities/EnumTypes'
 
 export class SteamId {
   accountType: SteamAccountType
